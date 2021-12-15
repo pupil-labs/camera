@@ -1,5 +1,6 @@
-import nptyping as npt
 import typing as T
+
+import nptyping as npt
 
 CameraMatrix = npt.NDArray[(3, 3), npt.Float[32]]
 DistCoeffs = npt.NDArray[T.Any, npt.Float[32]]
