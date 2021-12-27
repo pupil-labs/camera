@@ -1,10 +1,10 @@
 import importlib
-import numpy as np
 import typing as T
+
+import numpy as np
 
 
 class AvailableBackends:
-
     @staticmethod
     def has_mpmath() -> bool:
         importlib.invalidate_caches()
@@ -12,8 +12,10 @@ class AvailableBackends:
             importlib.import_module("mpmath")
             import mpmath
             import mpmath as _
+
             from . import camera_mpmath
             from . import camera_mpmath as _
+
             return True
         except ImportError:
             return False
@@ -25,8 +27,10 @@ class AvailableBackends:
             importlib.import_module("cv2")
             import cv2
             import cv2 as _
+
             from . import camera_opencv
             from . import camera_opencv as _
+
             return True
         except ImportError:
             return False
@@ -40,8 +44,10 @@ class AvailableBackends:
             import scipy as _
             import scipy.optimize
             import scipy.optimize as _
+
             from . import camera_scipy
             from . import camera_scipy as _
+
             return True
         except ImportError:
             return False

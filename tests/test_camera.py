@@ -1,4 +1,5 @@
 import contextlib
+
 from pupil_labs.camera.utils import AvailableBackends
 
 
@@ -42,14 +43,11 @@ def custom_import():
 def test_backend_imports():
     with custom_import() as _:
 
-        assert AvailableBackends.has_mpmath(),\
-            "MPMath backend should be available"
+        assert AvailableBackends.has_mpmath(), "MPMath backend should be available"
 
-        assert AvailableBackends.has_opencv(),\
-            "OpenCV backend should be available"
+        assert AvailableBackends.has_opencv(), "OpenCV backend should be available"
 
-        assert AvailableBackends.has_scipy(),\
-            "SciPy backend should be available"
+        assert AvailableBackends.has_scipy(), "SciPy backend should be available"
 
 
 def test_backend_imports_no_cv2():
@@ -57,14 +55,13 @@ def test_backend_imports_no_cv2():
         allowed_modules["cv2"] = False
         allowed_modules["scipy"] = True
 
-        assert AvailableBackends.has_mpmath(),\
-            "MPMath backend should be available"
+        assert AvailableBackends.has_mpmath(), "MPMath backend should be available"
 
-        assert AvailableBackends.has_scipy(),\
-            "SciPy backend should be available"
+        assert AvailableBackends.has_scipy(), "SciPy backend should be available"
 
-        assert not AvailableBackends.has_opencv(),\
-            "OpenCV backend should NOT be available"
+        assert (
+            not AvailableBackends.has_opencv()
+        ), "OpenCV backend should NOT be available"
 
 
 def test_backend_imports_no_scipy():
@@ -72,14 +69,13 @@ def test_backend_imports_no_scipy():
         allowed_modules["cv2"] = True
         allowed_modules["scipy"] = False
 
-        assert AvailableBackends.has_mpmath(),\
-            "MPMath backend should be available"
+        assert AvailableBackends.has_mpmath(), "MPMath backend should be available"
 
-        assert AvailableBackends.has_opencv(),\
-            "OpenCV backend should be available"
+        assert AvailableBackends.has_opencv(), "OpenCV backend should be available"
 
-        assert not AvailableBackends.has_scipy(),\
-            "SciPy backend should NOT be available"
+        assert (
+            not AvailableBackends.has_scipy()
+        ), "SciPy backend should NOT be available"
 
 
 def test_backend_imports_no_cv2_no_scipy():
@@ -87,11 +83,12 @@ def test_backend_imports_no_cv2_no_scipy():
         allowed_modules["cv2"] = False
         allowed_modules["scipy"] = False
 
-        assert AvailableBackends.has_mpmath(),\
-            "MPMath backend should be available"
+        assert AvailableBackends.has_mpmath(), "MPMath backend should be available"
 
-        assert not AvailableBackends.has_opencv(),\
-            "OpenCV backend should NOT be available"
+        assert (
+            not AvailableBackends.has_opencv()
+        ), "OpenCV backend should NOT be available"
 
-        assert not AvailableBackends.has_scipy(),\
-            "SciPy backend should NOT be available"
+        assert (
+            not AvailableBackends.has_scipy()
+        ), "SciPy backend should NOT be available"

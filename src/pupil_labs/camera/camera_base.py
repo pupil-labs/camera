@@ -66,7 +66,8 @@ def CameraRadial(
     pixel_height: int,
     camera_matrix: CT.CameraMatrix,
     dist_coeffs: CT.DistCoeffs,
-    optimization: CT.Optimization):
+    optimization: CT.Optimization,
+):
 
     from .utils import AvailableBackends
 
@@ -79,11 +80,14 @@ def CameraRadial(
 
     if optimization == CT.Optimization.ACCURACY and AvailableBackends.has_scipy():
         from .camera_scipy import CameraRadial as CameraRadial_SciPy
+
         return CameraRadial_SciPy(**kwargs)
 
     if optimization == CT.Optimization.SPEED and AvailableBackends.has_opencv():
         from .camera_opencv import CameraRadial as CameraRadial_OpenCV
+
         return CameraRadial_OpenCV(**kwargs)
 
     from .camera_mpmath import CameraRadial as CameraRadial_MPMath
+
     return CameraRadial_MPMath(**kwargs)

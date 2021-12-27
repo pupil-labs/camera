@@ -1,6 +1,7 @@
 from mpmath import mp
-from . import utils
+
 from . import types as CT
+from . import utils
 from .camera_base import Camera as Base
 
 
