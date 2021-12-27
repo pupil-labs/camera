@@ -1,5 +1,6 @@
 import contextlib
 
+from pupil_labs.camera import CameraRadial, Optimization
 from pupil_labs.camera.utils import AvailableBackends
 
 
@@ -92,3 +93,78 @@ def test_backend_imports_no_cv2_no_scipy():
         assert (
             not AvailableBackends.has_scipy()
         ), "SciPy backend should NOT be available"
+
+
+def test_backend_selection_base():
+    with custom_import() as allowed_modules:
+        allowed_modules["cv2"] = False
+        allowed_modules["scipy"] = False
+
+        from pupil_labs.camera.camera_mpmath import CameraRadial as CameraRadial_MPMath
+
+        optimization = Optimization.ACCURACY
+        assert isinstance(
+            CameraRadial(0, 0, None, None, optimization), CameraRadial_MPMath
+        )
+
+        optimization = Optimization.SPEED
+        assert isinstance(
+            CameraRadial(0, 0, None, None, optimization), CameraRadial_MPMath
+        )
+
+
+def test_backend_selection_with_opencv():
+    with custom_import() as allowed_modules:
+        allowed_modules["cv2"] = True
+        allowed_modules["scipy"] = False
+
+        from pupil_labs.camera.camera_mpmath import CameraRadial as CameraRadial_MPMath
+        from pupil_labs.camera.camera_opencv import CameraRadial as CameraRadial_OpenCV
+
+        optimization = Optimization.ACCURACY
+        assert isinstance(
+            CameraRadial(0, 0, None, None, optimization), CameraRadial_MPMath
+        )
+
+        optimization = Optimization.SPEED
+        assert isinstance(
+            CameraRadial(0, 0, None, None, optimization), CameraRadial_OpenCV
+        )
+
+
+def test_backend_selection_with_scipy():
+    with custom_import() as allowed_modules:
+        allowed_modules["cv2"] = False
+        allowed_modules["scipy"] = True
+
+        from pupil_labs.camera.camera_mpmath import CameraRadial as CameraRadial_MPMath
+        from pupil_labs.camera.camera_scipy import CameraRadial as CameraRadial_SciPy
+
+        optimization = Optimization.ACCURACY
+        assert isinstance(
+            CameraRadial(0, 0, None, None, optimization), CameraRadial_SciPy
+        )
+
+        optimization = Optimization.SPEED
+        assert isinstance(
+            CameraRadial(0, 0, None, None, optimization), CameraRadial_MPMath
+        )
+
+
+def test_backend_selection_with_opencv_with_scipy():
+    with custom_import() as allowed_modules:
+        allowed_modules["cv2"] = True
+        allowed_modules["scipy"] = True
+
+        from pupil_labs.camera.camera_opencv import CameraRadial as CameraRadial_OpenCV
+        from pupil_labs.camera.camera_scipy import CameraRadial as CameraRadial_SciPy
+
+        optimization = Optimization.ACCURACY
+        assert isinstance(
+            CameraRadial(0, 0, None, None, optimization), CameraRadial_SciPy
+        )
+
+        optimization = Optimization.SPEED
+        assert isinstance(
+            CameraRadial(0, 0, None, None, optimization), CameraRadial_OpenCV
+        )
