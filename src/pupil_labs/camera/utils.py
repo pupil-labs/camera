@@ -1,5 +1,50 @@
+import importlib
 import numpy as np
 import typing as T
+
+
+class AvailableBackends:
+
+    @staticmethod
+    def has_mpmath() -> bool:
+        importlib.invalidate_caches()
+        try:
+            importlib.import_module("mpmath")
+            import mpmath
+            import mpmath as _
+            from . import camera_mpmath
+            from . import camera_mpmath as _
+            return True
+        except ImportError:
+            return False
+
+    @staticmethod
+    def has_opencv() -> bool:
+        importlib.invalidate_caches()
+        try:
+            importlib.import_module("cv2")
+            import cv2
+            import cv2 as _
+            from . import camera_opencv
+            from . import camera_opencv as _
+            return True
+        except ImportError:
+            return False
+
+    @staticmethod
+    def has_scipy() -> bool:
+        importlib.invalidate_caches()
+        try:
+            importlib.import_module("scipy")
+            import scipy
+            import scipy as _
+            import scipy.optimize
+            import scipy.optimize as _
+            from . import camera_scipy
+            from . import camera_scipy as _
+            return True
+        except ImportError:
+            return False
 
 
 def apply_distortion_model(point, dist_coeffs):
