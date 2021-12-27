@@ -6,7 +6,7 @@ import numpy as np
 from . import types as CT
 
 
-class CameraABC(abc.ABC):
+class Camera(abc.ABC):
     def __init__(
         self,
         pixel_width: int,
@@ -56,6 +56,34 @@ class CameraABC(abc.ABC):
         )
 
     @classmethod
-    def load_from_file(cls, file_path: Path) -> 'CameraABC':
+    def load_from_file(cls, file_path: Path) -> 'Camera':
         data = np.load(file_path)
         return cls(data["camera_matrix"], data["dist_coeffs"])
+
+
+def CameraRadial(
+    pixel_width: int,
+    pixel_height: int,
+    camera_matrix: CT.CameraMatrix,
+    dist_coeffs: CT.DistCoeffs,
+    optimization: CT.Optimization):
+
+    from .utils import AvailableBackends
+
+    kwargs = {
+        "pixel_width": pixel_width,
+        "pixel_height": pixel_height,
+        "camera_matrix": camera_matrix,
+        "dist_coeffs": dist_coeffs,
+    }
+
+    if optimization == CT.Optimization.ACCURACY and AvailableBackends.has_scipy():
+        from .camera_scipy import CameraRadial as CameraRadial_SciPy
+        return CameraRadial_SciPy(**kwargs)
+
+    if optimization == CT.Optimization.SPEED and AvailableBackends.has_opencv():
+        from .camera_opencv import CameraRadial as CameraRadial_OpenCV
+        return CameraRadial_OpenCV(**kwargs)
+
+    from .camera_mpmath import CameraRadial as CameraRadial_MPMath
+    return CameraRadial_MPMath(**kwargs)

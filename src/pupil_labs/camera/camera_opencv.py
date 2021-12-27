@@ -1,13 +1,13 @@
 import cv2
 import numpy as np
-
 from . import types as CT
-from .camera_base import CameraABC
+from .camera_mpmath import CameraRadial as Base
 
 
-class CameraRadial(CameraABC):
+class CameraRadial(Base):
     """
-    Camera model assuming a lense with radial distortion.
+    Camera model assuming a lense with radial distortion,
+    implemented using OpenCV library.
     """
 
     def undistort_image(self, image: CT.Image) -> CT.Image:
@@ -37,8 +37,8 @@ class CameraRadial(CameraABC):
         else:
             dist_coeffs = np.asarray([[0.0, 0.0, 0.0, 0.0, 0.0]])
 
-        rvec = np.zeros(3).reshape(1, 1, 3)
-        tvec = np.zeros(3).reshape(1, 1, 3)
+        rvec = np.zeros((1, 1, 3))
+        tvec = np.zeros((1, 1, 3))
 
         points_3d = points_3d.reshape((1, -1, 3))
 
