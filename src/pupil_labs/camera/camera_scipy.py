@@ -1,6 +1,7 @@
+import typing as T
+
 import numpy as np
 import scipy.optimize
-import typing as T
 
 from . import types as CT
 from . import utils
@@ -30,7 +31,7 @@ class CameraRadial(Base):
             dist_coeffs += [0.0, 0.0, 0.0]
 
         def unproject_point(point_2d: T.Tuple[float, float]):
-            x, y, z = *point_2d, 1.
+            x, y, z = *point_2d, 1.0
             x = (x - camera_matrix[0][2]) / camera_matrix[0][0]
             y = (y - camera_matrix[1][2]) / camera_matrix[1][1]
 
