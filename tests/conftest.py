@@ -1,6 +1,6 @@
-from pupil_labs.camera.camera_mpmath import CameraRadial as CameraRadial_MPMath
-from pupil_labs.camera.camera_opencv import CameraRadial as CameraRadial_OpenCV
-from pupil_labs.camera.camera_scipy import CameraRadial as CameraRadial_SciPy
+from pupil_labs.camera.backend_mpmath import CameraRadial as CameraRadial_MPMath
+from pupil_labs.camera.backend_opencv import CameraRadial as CameraRadial_OpenCV
+from pupil_labs.camera.backend_scipy import CameraRadial as CameraRadial_SciPy
 
 RADIAL_BACKEND_CLASSES = {
     "mpmath": CameraRadial_MPMath,

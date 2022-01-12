@@ -2,7 +2,7 @@ import cv2
 import numpy as np
 
 from . import types as CT
-from .camera_mpmath import CameraRadial as Base
+from .backend_mpmath import CameraRadial as Base
 
 
 class CameraRadial(Base):

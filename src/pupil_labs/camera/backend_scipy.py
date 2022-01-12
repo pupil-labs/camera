@@ -5,7 +5,7 @@ import scipy.optimize
 
 from . import types as CT
 from . import utils
-from .camera_mpmath import CameraRadial as Base
+from .backend_mpmath import CameraRadial as Base
 
 
 class CameraRadial(Base):

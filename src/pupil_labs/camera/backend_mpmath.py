@@ -5,7 +5,7 @@ from mpmath import mp
 
 from . import types as CT
 from . import utils
-from .camera_base import Camera as Base
+from .base import Camera as Base
 
 
 class CameraRadial(Base):

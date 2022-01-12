@@ -13,8 +13,8 @@ class AvailableBackends:
             import mpmath
             import mpmath as _
 
-            from . import camera_mpmath
-            from . import camera_mpmath as _
+            from . import backend_mpmath
+            from . import backend_mpmath as _
 
             return True
         except ImportError:
@@ -28,8 +28,8 @@ class AvailableBackends:
             import cv2
             import cv2 as _
 
-            from . import camera_opencv
-            from . import camera_opencv as _
+            from . import backend_opencv
+            from . import backend_opencv as _
 
             return True
         except ImportError:
@@ -45,8 +45,8 @@ class AvailableBackends:
             import scipy.optimize
             import scipy.optimize as _
 
-            from . import camera_scipy
-            from . import camera_scipy as _
+            from . import backend_scipy
+            from . import backend_scipy as _
 
             return True
         except ImportError:

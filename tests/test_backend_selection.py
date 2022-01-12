@@ -100,7 +100,7 @@ def test_backend_selection_base():
         allowed_modules["cv2"] = False
         allowed_modules["scipy"] = False
 
-        from pupil_labs.camera.camera_mpmath import CameraRadial as CameraRadial_MPMath
+        from pupil_labs.camera.backend_mpmath import CameraRadial as CameraRadial_MPMath
 
         optimization = Optimization.ACCURACY
         assert isinstance(
@@ -118,8 +118,8 @@ def test_backend_selection_with_opencv():
         allowed_modules["cv2"] = True
         allowed_modules["scipy"] = False
 
-        from pupil_labs.camera.camera_mpmath import CameraRadial as CameraRadial_MPMath
-        from pupil_labs.camera.camera_opencv import CameraRadial as CameraRadial_OpenCV
+        from pupil_labs.camera.backend_mpmath import CameraRadial as CameraRadial_MPMath
+        from pupil_labs.camera.backend_opencv import CameraRadial as CameraRadial_OpenCV
 
         optimization = Optimization.ACCURACY
         assert isinstance(
@@ -137,8 +137,8 @@ def test_backend_selection_with_scipy():
         allowed_modules["cv2"] = False
         allowed_modules["scipy"] = True
 
-        from pupil_labs.camera.camera_mpmath import CameraRadial as CameraRadial_MPMath
-        from pupil_labs.camera.camera_scipy import CameraRadial as CameraRadial_SciPy
+        from pupil_labs.camera.backend_mpmath import CameraRadial as CameraRadial_MPMath
+        from pupil_labs.camera.backend_scipy import CameraRadial as CameraRadial_SciPy
 
         optimization = Optimization.ACCURACY
         assert isinstance(
@@ -156,8 +156,8 @@ def test_backend_selection_with_opencv_with_scipy():
         allowed_modules["cv2"] = True
         allowed_modules["scipy"] = True
 
-        from pupil_labs.camera.camera_opencv import CameraRadial as CameraRadial_OpenCV
-        from pupil_labs.camera.camera_scipy import CameraRadial as CameraRadial_SciPy
+        from pupil_labs.camera.backend_opencv import CameraRadial as CameraRadial_OpenCV
+        from pupil_labs.camera.backend_scipy import CameraRadial as CameraRadial_SciPy
 
         optimization = Optimization.ACCURACY
         assert isinstance(
