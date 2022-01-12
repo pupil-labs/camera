@@ -1,12 +1,17 @@
 import abc
 from pathlib import Path
+import typing as T
 
 import numpy as np
 
 from . import types as CT
 
 
-class Camera(abc.ABC):
+CameraType = T.TypeVar("CameraType", bound="CameraBase")
+CameraRadialType = T.TypeVar("CameraRadialType", bound="CameraRadialBase")
+
+
+class CameraBase(abc.ABC):
     def __init__(
         self,
         pixel_width: int,
@@ -61,13 +66,17 @@ class Camera(abc.ABC):
         return cls(data["camera_matrix"], data["dist_coeffs"])
 
 
+class CameraRadialBase(CameraBase):
+    pass
+
+
 def CameraRadial(
     pixel_width: int,
     pixel_height: int,
     camera_matrix: CT.CameraMatrix,
     dist_coeffs: CT.DistCoeffs,
     optimization: CT.Optimization,
-):
+) -> CameraRadialType:
 
     from .utils import AvailableBackends
 
