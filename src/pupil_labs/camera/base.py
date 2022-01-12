@@ -1,11 +1,10 @@
 import abc
-from pathlib import Path
 import typing as T
+from pathlib import Path
 
 import numpy as np
 
 from . import types as CT
-
 
 CameraType = T.TypeVar("CameraType", bound="CameraBase")
 CameraRadialType = T.TypeVar("CameraRadialType", bound="CameraRadialBase")
@@ -28,16 +27,26 @@ class CameraBase(abc.ABC):
         camera_matrix = np.squeeze(camera_matrix)
 
         if pixel_width <= 0:
-            raise ValueError(f"pixel_width should be a positive non-zero integer: {pixel_width}")
+            raise ValueError(
+                f"pixel_width should be a positive non-zero integer: {pixel_width}"
+            )
         if pixel_height <= 0:
-            raise ValueError(f"pixel_width should be a positive non-zero integer: {pixel_height}")
+            raise ValueError(
+                f"pixel_width should be a positive non-zero integer: {pixel_height}"
+            )
         if camera_matrix.shape != (3, 3):
-            raise ValueError(f"camera_matrix should have 3x3 shape: {camera_matrix.shape}")
+            raise ValueError(
+                f"camera_matrix should have 3x3 shape: {camera_matrix.shape}"
+            )
         if len(dist_coeffs.shape) != 1:
-            raise ValueError(f"dist_coeffs should be a 1-dim array: {dist_coeffs.shape}")
+            raise ValueError(
+                f"dist_coeffs should be a 1-dim array: {dist_coeffs.shape}"
+            )
         if dist_coeffs.shape[0] < 5:
             # TODO: Not sure about which lengths for dist_coeffs are valid
-            raise ValueError(f"dist_coeffs shoudl have at least 5 elements: {dist_coeffs.shape}")
+            raise ValueError(
+                f"dist_coeffs shoudl have at least 5 elements: {dist_coeffs.shape}"
+            )
 
         self.camera_matrix = camera_matrix.tolist()
         self.dist_coeffs = dist_coeffs.tolist()

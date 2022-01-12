@@ -42,7 +42,9 @@ def custom_import():
 
 
 def camera_for_optimization(optimization: Optimization) -> CameraRadialType:
-    return CameraRadial(1, 1, [[0, 0, 0], [0, 0, 0], [0, 0, 0]], [0, 0, 0, 0, 0], optimization)
+    return CameraRadial(
+        1, 1, [[0, 0, 0], [0, 0, 0], [0, 0, 0]], [0, 0, 0, 0, 0], optimization
+    )
 
 
 def test_backend_imports():
@@ -107,14 +109,10 @@ def test_backend_selection_base():
         from pupil_labs.camera.backend_mpmath import CameraRadial as CameraRadial_MPMath
 
         optimization = Optimization.ACCURACY
-        assert isinstance(
-            camera_for_optimization(optimization), CameraRadial_MPMath
-        )
+        assert isinstance(camera_for_optimization(optimization), CameraRadial_MPMath)
 
         optimization = Optimization.SPEED
-        assert isinstance(
-            camera_for_optimization(optimization), CameraRadial_MPMath
-        )
+        assert isinstance(camera_for_optimization(optimization), CameraRadial_MPMath)
 
 
 def test_backend_selection_with_opencv():
@@ -126,14 +124,10 @@ def test_backend_selection_with_opencv():
         from pupil_labs.camera.backend_opencv import CameraRadial as CameraRadial_OpenCV
 
         optimization = Optimization.ACCURACY
-        assert isinstance(
-            camera_for_optimization(optimization), CameraRadial_MPMath
-        )
+        assert isinstance(camera_for_optimization(optimization), CameraRadial_MPMath)
 
         optimization = Optimization.SPEED
-        assert isinstance(
-            camera_for_optimization(optimization), CameraRadial_OpenCV
-        )
+        assert isinstance(camera_for_optimization(optimization), CameraRadial_OpenCV)
 
 
 def test_backend_selection_with_scipy():
@@ -145,14 +139,10 @@ def test_backend_selection_with_scipy():
         from pupil_labs.camera.backend_scipy import CameraRadial as CameraRadial_SciPy
 
         optimization = Optimization.ACCURACY
-        assert isinstance(
-            camera_for_optimization(optimization), CameraRadial_SciPy
-        )
+        assert isinstance(camera_for_optimization(optimization), CameraRadial_SciPy)
 
         optimization = Optimization.SPEED
-        assert isinstance(
-            camera_for_optimization(optimization), CameraRadial_MPMath
-        )
+        assert isinstance(camera_for_optimization(optimization), CameraRadial_MPMath)
 
 
 def test_backend_selection_with_opencv_with_scipy():
@@ -164,11 +154,7 @@ def test_backend_selection_with_opencv_with_scipy():
         from pupil_labs.camera.backend_scipy import CameraRadial as CameraRadial_SciPy
 
         optimization = Optimization.ACCURACY
-        assert isinstance(
-            camera_for_optimization(optimization), CameraRadial_SciPy
-        )
+        assert isinstance(camera_for_optimization(optimization), CameraRadial_SciPy)
 
         optimization = Optimization.SPEED
-        assert isinstance(
-            camera_for_optimization(optimization), CameraRadial_OpenCV
-        )
+        assert isinstance(camera_for_optimization(optimization), CameraRadial_OpenCV)

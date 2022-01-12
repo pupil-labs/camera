@@ -11,4 +11,8 @@ RADIAL_BACKEND_CLASSES = {
 
 def pytest_generate_tests(metafunc):
     if "radial_backend_cls" in metafunc.fixturenames:
-        metafunc.parametrize("radial_backend_cls", RADIAL_BACKEND_CLASSES.values(), ids=RADIAL_BACKEND_CLASSES.keys())
+        metafunc.parametrize(
+            "radial_backend_cls",
+            RADIAL_BACKEND_CLASSES.values(),
+            ids=RADIAL_BACKEND_CLASSES.keys(),
+        )
