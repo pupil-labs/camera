@@ -75,7 +75,7 @@ def CameraRadial(
     pixel_height: int,
     camera_matrix: CT.CameraMatrix,
     dist_coeffs: CT.DistCoeffs,
-    optimization: CT.Optimization,
+    optimization: CT.Optimization = CT.Optimization.SPEED,
 ) -> CameraRadialType:
 
     from .utils import AvailableBackends
