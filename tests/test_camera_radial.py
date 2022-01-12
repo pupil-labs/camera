@@ -1,10 +1,6 @@
 import numpy as np
 from numpy.testing import assert_almost_equal
 
-from pupil_labs.camera.camera_mpmath import CameraRadial as CameraRadial_MPMath
-from pupil_labs.camera.camera_opencv import CameraRadial as CameraRadial_OpenCV
-from pupil_labs.camera.camera_scipy import CameraRadial as CameraRadial_SciPy
-
 PIXEL_WIDTH = 1088
 PIXEL_HEIGHT = 1080
 CAMERA_MATRIX = [
@@ -22,44 +18,37 @@ DIST_COEFFS = [
     0.008640898256976831,
     0.06428433887310138,
 ]
-CAMERA_RADIAL_KS = [
-    CameraRadial_MPMath,
-    CameraRadial_OpenCV,
-    CameraRadial_SciPy,
-]
 
 
-def test_unproject_points():
+def test_unproject_points(radial_backend_cls):
     points_2d = [[100, 200], [800, 600]]
     points_3d = [[-0.75240, -0.55311, 1.0], [0.32508, 0.08498, 1.0]]
 
-    for cls in CAMERA_RADIAL_KS:
-        camera = cls(
-            pixel_width=PIXEL_WIDTH,
-            pixel_height=PIXEL_HEIGHT,
-            camera_matrix=CAMERA_MATRIX,
-            dist_coeffs=DIST_COEFFS,
-        )
-        assert_almost_equal(
-            camera.unproject_points(points_2d, use_distortion=True),
-            np.asarray(points_3d),
-            decimal=3,
-        )
+    camera = radial_backend_cls(
+        pixel_width=PIXEL_WIDTH,
+        pixel_height=PIXEL_HEIGHT,
+        camera_matrix=CAMERA_MATRIX,
+        dist_coeffs=DIST_COEFFS,
+    )
+    assert_almost_equal(
+        camera.unproject_points(points_2d, use_distortion=True),
+        np.asarray(points_3d),
+        decimal=3,
+    )
 
 
-def test_project_points():
+def test_project_points(radial_backend_cls):
     points_2d = [[100.3349, 200.2458], [799.9932, 599.9996]]
     points_3d = [[-0.75170, -0.55260, 1.0], [0.32508, 0.08498, 1.0]]
 
-    for cls in CAMERA_RADIAL_KS:
-        camera = cls(
-            pixel_width=PIXEL_WIDTH,
-            pixel_height=PIXEL_HEIGHT,
-            camera_matrix=CAMERA_MATRIX,
-            dist_coeffs=DIST_COEFFS,
-        )
-        assert_almost_equal(
-            camera.project_points(points_3d, use_distortion=True),
-            np.asarray(points_2d),
-            decimal=4,
-        )
+    camera = radial_backend_cls(
+        pixel_width=PIXEL_WIDTH,
+        pixel_height=PIXEL_HEIGHT,
+        camera_matrix=CAMERA_MATRIX,
+        dist_coeffs=DIST_COEFFS,
+    )
+    assert_almost_equal(
+        camera.project_points(points_3d, use_distortion=True),
+        np.asarray(points_2d),
+        decimal=4,
+    )
