@@ -11,15 +11,16 @@ CameraRadialType = T.TypeVar("CameraRadialType", bound="CameraRadialBase")
 
 
 class CameraBase(abc.ABC):
-    _NO_DIST_COEFFS = [0.0, 0.0, 0.0, 0.0, 0.0]
-
     def __init__(
         self,
         pixel_width: int,
         pixel_height: int,
         camera_matrix: CT.CameraMatrix,
-        dist_coeffs: CT.DistCoeffs = _NO_DIST_COEFFS,
+        dist_coeffs: T.Optional[CT.DistCoeffs] = None,
     ):
+        if dist_coeffs is None:
+            dist_coeffs = [0.0, 0.0, 0.0, 0.0, 0.0]
+
         camera_matrix = np.asarray(camera_matrix, dtype=np.float32)
         dist_coeffs = np.asarray(dist_coeffs, dtype=np.float32)
 
