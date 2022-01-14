@@ -7,47 +7,25 @@ import numpy as np
 class AvailableBackends:
     @staticmethod
     def has_mpmath() -> bool:
-        importlib.invalidate_caches()
         try:
-            importlib.import_module("mpmath")
-            import mpmath
             import mpmath as _
-
-            from . import backend_mpmath
-            from . import backend_mpmath as _
-
             return True
         except ImportError:
             return False
 
     @staticmethod
     def has_opencv() -> bool:
-        importlib.invalidate_caches()
         try:
-            importlib.import_module("cv2")
-            import cv2
             import cv2 as _
-
-            from . import backend_opencv
-            from . import backend_opencv as _
-
             return True
         except ImportError:
             return False
 
     @staticmethod
     def has_scipy() -> bool:
-        importlib.invalidate_caches()
         try:
-            importlib.import_module("scipy")
-            import scipy
             import scipy as _
-            import scipy.optimize
             import scipy.optimize as _
-
-            from . import backend_scipy
-            from . import backend_scipy as _
-
             return True
         except ImportError:
             return False
