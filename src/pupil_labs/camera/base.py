@@ -108,7 +108,8 @@ def CameraRadial(
 ) -> CameraRadialType:
 
     if not isinstance(optimization, CT.Optimization):
-        raise ValueError(f"optimization must be an instance of types.Optimization")
+        cls_name = f"{CT.Optimization.__module__}.{CT.Optimization.__name__}"
+        raise ValueError(f"optimization must be an instance of {cls_name}")
 
     from .utils import AvailableBackends
 
