@@ -102,7 +102,9 @@ def save_radial(file_path: Path, camera: CameraRadialType):
     np.savez(file_path, **_dict)
 
 
-def load_radial(file_path: Path, optimization: CT.Optimization = CT.Optimization.SPEED) -> CameraRadialType:
+def load_radial(
+    file_path: Path, optimization: CT.Optimization = CT.Optimization.SPEED
+) -> CameraRadialType:
     _dict = np.load(file_path)
     return CameraRadial(
         pixel_width=_dict["pixel_width"],

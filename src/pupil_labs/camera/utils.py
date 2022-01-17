@@ -9,6 +9,7 @@ class AvailableBackends:
     def has_mpmath() -> bool:
         try:
             import mpmath as _
+
             return True
         except ImportError:
             return False
@@ -17,6 +18,7 @@ class AvailableBackends:
     def has_opencv() -> bool:
         try:
             import cv2 as _
+
             return True
         except ImportError:
             return False
@@ -26,6 +28,7 @@ class AvailableBackends:
         try:
             import scipy as _
             import scipy.optimize as _
+
             return True
         except ImportError:
             return False
