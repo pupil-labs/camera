@@ -1,4 +1,5 @@
 import abc
+import copy
 import typing as T
 from pathlib import Path
 
@@ -51,7 +52,8 @@ class CameraBase(abc.ABC):
 
         self.camera_matrix = camera_matrix.tolist()
         self.dist_coeffs = dist_coeffs.tolist()
-        self.pixel_resolution_wh = (pixel_width, pixel_height)
+        self.pixel_width = pixel_width
+        self.pixel_height = pixel_height
 
     @property
     def focal_length(self) -> float:
@@ -85,19 +87,29 @@ class CameraBase(abc.ABC):
         points_2d = self.project_points(points_3d, use_distortion=True)
         return points_2d
 
-    def save_to_file(self, file_path: Path):
-        np.savez(
-            file_path, camera_matrix=self.camera_matrix, dist_coeffs=self.dist_coeffs
-        )
-
-    @classmethod
-    def load_from_file(cls, file_path: Path) -> 'Camera':
-        data = np.load(file_path)
-        return cls(data["camera_matrix"], data["dist_coeffs"])
-
 
 class CameraRadialBase(CameraBase):
     pass
+
+
+def save_radial(file_path: Path, camera: CameraRadialType):
+    _dict = {
+        "camera_matrix": copy.deepcopy(camera.camera_matrix),
+        "dist_coeffs": copy.deepcopy(camera.dist_coeffs),
+        "pixel_height": camera.pixel_height,
+        "pixel_width": camera.pixel_width,
+    }
+    np.savez(file_path, **_dict)
+
+
+def load_radial(file_path: Path, optimization: CT.Optimization = CT.Optimization.SPEED) -> CameraRadialType:
+    _dict = np.load(file_path)
+    return CameraRadial(
+        pixel_width=_dict["pixel_width"],
+        pixel_height=_dict["pixel_height"],
+        camera_matrix=copy.deepcopy(_dict["camera_matrix"]),
+        dist_coeffs=copy.deepcopy(_dict["dist_coeffs"]),
+    )
 
 
 def CameraRadial(
