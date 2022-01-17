@@ -30,9 +30,6 @@ class CameraRadial(Base):
         else:
             dist_coeffs = [0.0, 0.0, 0.0, 0.0, 0.0]
 
-        if len(dist_coeffs) == 5:
-            dist_coeffs += [0.0, 0.0, 0.0]
-
         def unproject_point(point_2d: T.Tuple[float, float]):
             x, y, z = *point_2d, 1.0
             x = (x - camera_matrix[0][2]) / camera_matrix[0][0]
@@ -65,9 +62,6 @@ class CameraRadial(Base):
             dist_coeffs = self.dist_coeffs
         else:
             dist_coeffs = [0.0, 0.0, 0.0, 0.0, 0.0]
-
-        if len(dist_coeffs) == 5:
-            dist_coeffs += [0.0, 0.0, 0.0]
 
         def project_point(point_3d: T.Tuple[float, float, float]):
             x, y, _ = point_3d
