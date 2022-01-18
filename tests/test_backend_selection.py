@@ -1,6 +1,7 @@
 import contextlib
-import pytest
 import warnings
+
+import pytest
 
 from pupil_labs.camera import CameraRadial, CameraRadialType, Optimization
 from pupil_labs.camera.utils import AvailableBackends
