@@ -1,5 +1,4 @@
 import abc
-import copy
 import typing as T
 from pathlib import Path
 
@@ -94,8 +93,8 @@ class CameraRadialBase(CameraBase):
 
 def save_radial(file_path: Path, camera: CameraRadialType):
     _dict = {
-        "camera_matrix": copy.deepcopy(camera.camera_matrix),
-        "dist_coeffs": copy.deepcopy(camera.dist_coeffs),
+        "camera_matrix": camera.camera_matrix,
+        "dist_coeffs": camera.dist_coeffs,
         "pixel_height": camera.pixel_height,
         "pixel_width": camera.pixel_width,
     }
@@ -109,8 +108,8 @@ def load_radial(
     return CameraRadial(
         pixel_width=_dict["pixel_width"],
         pixel_height=_dict["pixel_height"],
-        camera_matrix=copy.deepcopy(_dict["camera_matrix"]),
-        dist_coeffs=copy.deepcopy(_dict["dist_coeffs"]),
+        camera_matrix=_dict["camera_matrix"],
+        dist_coeffs=_dict["dist_coeffs"],
     )
 
 
