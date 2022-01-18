@@ -1,6 +1,7 @@
 import abc
 import typing as T
 from pathlib import Path
+import warnings
 
 import numpy as np
 
@@ -134,15 +135,21 @@ def CameraRadial(
         "dist_coeffs": dist_coeffs,
     }
 
-    if optimization == CT.Optimization.ACCURACY and AvailableBackends.has_scipy():
-        from .backend_scipy import CameraRadial as CameraRadial_SciPy
+    if optimization == CT.Optimization.ACCURACY:
+        if AvailableBackends.has_scipy():
+            from .backend_scipy import CameraRadial as CameraRadial_SciPy
 
-        return CameraRadial_SciPy(**kwargs)
+            return CameraRadial_SciPy(**kwargs)
+        else:
+            warnings.warn("Accuracy optimization requires installing scipy extra.")
 
-    if optimization == CT.Optimization.SPEED and AvailableBackends.has_opencv():
-        from .backend_opencv import CameraRadial as CameraRadial_OpenCV
+    if optimization == CT.Optimization.SPEED:
+        if AvailableBackends.has_opencv():
+            from .backend_opencv import CameraRadial as CameraRadial_OpenCV
 
-        return CameraRadial_OpenCV(**kwargs)
+            return CameraRadial_OpenCV(**kwargs)
+        else:
+            warnings.warn("Accuracy optimization requires installing opencv extra.")
 
     from .backend_mpmath import CameraRadial as CameraRadial_MPMath
 
