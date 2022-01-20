@@ -1,5 +1,4 @@
 import contextlib
-import warnings
 
 import pytest
 
