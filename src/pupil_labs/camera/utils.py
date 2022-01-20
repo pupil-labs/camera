@@ -1,6 +1,3 @@
-import importlib
-import typing as T
-
 import numpy as np
 
 
@@ -8,7 +5,7 @@ class AvailableBackends:
     @staticmethod
     def has_mpmath() -> bool:
         try:
-            import mpmath as _
+            import mpmath as _  # noqa: F401
 
             return True
         except ImportError:
@@ -17,7 +14,7 @@ class AvailableBackends:
     @staticmethod
     def has_opencv() -> bool:
         try:
-            import cv2 as _
+            import cv2 as _  # noqa: F401
 
             return True
         except ImportError:
@@ -26,8 +23,8 @@ class AvailableBackends:
     @staticmethod
     def has_scipy() -> bool:
         try:
-            import scipy as _
-            import scipy.optimize as _
+            import scipy as _  # noqa: F401
+            import scipy.optimize as _  # noqa: F401, F811
 
             return True
         except ImportError:
