@@ -50,8 +50,8 @@ class CameraBase(abc.ABC):
                 f"dist_coeffs shoudl have at least 5 elements: {dist_coeffs.shape}"
             )
 
-        self.camera_matrix = camera_matrix.tolist()
-        self.dist_coeffs = dist_coeffs.tolist()
+        self.camera_matrix = camera_matrix
+        self.dist_coeffs = dist_coeffs
         self.pixel_width = pixel_width
         self.pixel_height = pixel_height
 
