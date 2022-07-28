@@ -15,8 +15,8 @@ repos:
     rev: v2.37.3
     hooks:
       - id: pyupgrade
-        name: PyUpgrade 3.6+
-        args: ["--py36-plus"]
+        name: PyUpgrade 3.7+
+        args: ["--py37-plus"]
         exclude: ^bin/
 
   - repo: https://github.com/pycqa/flake8
