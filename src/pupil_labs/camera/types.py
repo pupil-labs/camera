@@ -1,14 +1,13 @@
 import enum
 
-from numpy import float32, uint8  # noqa
-from numpy.typing import NDArray  # noqa
-from typing_extensions import TypeAlias
+from numpy import float32, uint8
+from numpy.typing import NDArray
 
-CameraMatrix: TypeAlias = "NDArray[float32]"
-DistCoeffs: TypeAlias = "NDArray[float32]"
-Image: TypeAlias = "NDArray[uint8]"
-Points2D: TypeAlias = "NDArray[float32]"
-Points3D: TypeAlias = "NDArray[float32]"
+CameraMatrix = NDArray[float32]
+DistCoeffs = NDArray[float32]
+Image = NDArray[uint8]
+Points2D = NDArray[float32]
+Points3D = NDArray[float32]
 
 
 class AutoLowercaseNameEnum(enum.Enum):
