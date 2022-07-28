@@ -1,13 +1,14 @@
 import enum
-import typing as T
+from typing import Any  # noqa
 
-import nptyping as npt
+from nptyping import Float32, NDArray, Shape, UInt8  # noqa
+from typing_extensions import TypeAlias
 
-CameraMatrix = npt.NDArray[(3, 3), npt.Float[32]]
-DistCoeffs = npt.NDArray[T.Any, npt.Float[32]]
-Image = npt.NDArray[(T.Any, T.Any), npt.UInt[8]]
-Points2D = npt.NDArray[(T.Any, 2), npt.Float[32]]
-Points3D = npt.NDArray[(T.Any, 3), npt.Float[32]]
+CameraMatrix: TypeAlias = "NDArray[Shape['3, 3'], Float32]"
+DistCoeffs: TypeAlias = "NDArray[Any, Float32]"
+Image: TypeAlias = "NDArray[Shape[Any, Any], UInt8]"
+Points2D: TypeAlias = "NDArray[Shape[Any, 2], Float32]"
+Points3D: TypeAlias = "NDArray[Shape[Any, 3], Float32]"
 
 
 class AutoLowercaseNameEnum(enum.Enum):
