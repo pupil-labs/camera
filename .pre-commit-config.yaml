@@ -15,14 +15,20 @@ repos:
     rev: v2.37.3
     hooks:
       - id: pyupgrade
-        name: PyUpgrade 3.6+
-        args: ["--py36-plus"]
+        name: PyUpgrade 3.7+
+        args: ["--py37-plus"]
         exclude: ^bin/
+
+  - repo: https://github.com/pycqa/flake8
+    rev: 4.0.1
+    hooks:
+    - id: flake8
 
   - repo: https://github.com/PyCQA/isort
     rev: 5.10.1
     hooks:
       - id: isort
+        args: [--profile, black]
 
   - repo: https://github.com/psf/black
     rev: 22.6.0
