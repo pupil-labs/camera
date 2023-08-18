@@ -1,5 +1,6 @@
 import cv2
 import numpy as np
+from numpy.lib.recfunctions import structured_to_unstructured
 
 from . import types as CT
 from .backend_mpmath import CameraRadial as Base
@@ -25,8 +26,12 @@ class CameraRadial(Base):
         dist_coeffs = np.asarray(dist_coeffs, dtype=np.float32)
         camera_matrix = np.asarray(self.camera_matrix, dtype=np.float32)
 
-        points_2d = np.asarray(points_2d, dtype=np.float32)
-        points_2d = points_2d.reshape((-1, 1, 2))
+        if hasattr(points_2d, 'dtype') and points_2d.dtype.names is not None:
+            points_2d = structured_to_unstructured(points_2d, dtype=np.float32)
+        else:
+            points_2d = np.asarray(points_2d, dtype=np.float32)
+            points_2d = points_2d.reshape((-1, 1, 2))
+
         points_2d = cv2.undistortPoints(points_2d, camera_matrix, dist_coeffs)
 
         points_3d = cv2.convertPointsToHomogeneous(points_2d)
@@ -47,8 +52,11 @@ class CameraRadial(Base):
         dist_coeffs = np.asarray(dist_coeffs, dtype=np.float32)
         camera_matrix = np.asarray(self.camera_matrix, dtype=np.float32)
 
-        points_3d = np.asarray(points_3d, dtype=np.float32)
-        points_3d = points_3d.reshape((1, -1, 3))
+        if hasattr(points_3d, 'dtype') and points_3d.dtype.names is not None:
+            points_3d = structured_to_unstructured(points_3d, dtype=np.float32)
+        else:
+            points_3d = np.asarray(points_3d, dtype=np.float32)
+            points_3d = points_3d.reshape((-1, 1, 3))
 
         points_2d, _ = cv2.projectPoints(
             points_3d, rvec, tvec, camera_matrix, dist_coeffs

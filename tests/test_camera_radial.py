@@ -1,4 +1,5 @@
 import numpy as np
+import pytest
 from numpy.testing import assert_almost_equal
 
 PIXEL_WIDTH = 1088
@@ -20,9 +21,31 @@ DIST_COEFFS = [
 ]
 
 
-def test_unproject_points(radial_backend_cls):
-    points_2d = [[100, 200], [800, 600]]
-    points_3d = [[-0.75240, -0.55311, 1.0], [0.32508, 0.08498, 1.0]]
+@pytest.mark.parametrize(
+    'points',
+    [
+        np.array([(100, 200), (800, 600)]),  # unstructured ints
+        np.array(
+            [(100, 200), (800, 600)],
+            dtype=[('x', np.int32), ('y', np.int32)],
+        ),  # structured ints
+        np.array([(100, 200), (800, 600)], dtype=np.int32),  # unstructured ints
+        np.array(
+            [(100.0, 200.0), (800.0, 600.0)],
+            dtype=[('x', np.float32), ('y', np.float32)],
+        ),  # structured floats
+        np.array(
+            [(100.0, 200.0), (800.0, 600.0)],
+            dtype=[('x', np.float32), ('y', np.float32)],
+        ),  # structured floats
+        [(100, 200), (800, 600)],  # list of tuples
+        ([100, 200], [800, 600]),  # tuple of lists
+        [[100, 200], [800, 600]],  # list of lists
+        ((100, 200), (800, 600)),  # tuple of tuples
+    ],
+)
+def test_unproject_points(radial_backend_cls, points):
+    expected = np.array([[-0.75240, -0.55311, 1.0], [0.32508, 0.08498, 1.0]])
 
     camera = radial_backend_cls(
         pixel_width=PIXEL_WIDTH,
@@ -31,16 +54,28 @@ def test_unproject_points(radial_backend_cls):
         dist_coeffs=DIST_COEFFS,
     )
     assert_almost_equal(
-        camera.unproject_points(points_2d, use_distortion=True),
-        np.asarray(points_3d),
+        camera.unproject_points(points, use_distortion=True),
+        np.asarray(expected),
         decimal=3,
     )
 
 
-def test_project_points(radial_backend_cls):
-    points_2d = [[100.3349, 200.2458], [799.9932, 599.9996]]
-    points_3d = [[-0.75170, -0.55260, 1.0], [0.32508, 0.08498, 1.0]]
-
+@pytest.mark.parametrize(
+    'points',
+    [
+        np.array([(-0.75170, -0.55260, 1.0), (0.32508, 0.08498, 1.0)]),  # unstructured
+        np.array(
+            [(-0.75170, -0.55260, 1.0), (0.32508, 0.08498, 1.0)],
+            dtype=[('x', np.float32), ('y', np.float32), ('z', np.float32)],
+        ),  # structured
+        [(-0.75170, -0.55260, 1.0), (0.32508, 0.08498, 1.0)],  # list of tuples
+        ([-0.75170, -0.55260, 1.0], [0.32508, 0.08498, 1.0]),  # tuple of lists
+        [[-0.75170, -0.55260, 1.0], [0.32508, 0.08498, 1.0]],  # list of lists
+        ((-0.75170, -0.55260, 1.0), (0.32508, 0.08498, 1.0)),  # tuple of tuples
+    ],
+)
+def test_project_points(radial_backend_cls, points):
+    expected = np.array([(100.3349, 200.2458), (799.9932, 599.9996)])
     camera = radial_backend_cls(
         pixel_width=PIXEL_WIDTH,
         pixel_height=PIXEL_HEIGHT,
@@ -48,7 +83,7 @@ def test_project_points(radial_backend_cls):
         dist_coeffs=DIST_COEFFS,
     )
     assert_almost_equal(
-        camera.project_points(points_3d, use_distortion=True),
-        np.asarray(points_2d),
+        camera.project_points(points, use_distortion=True),
+        expected,
         decimal=4,
     )
